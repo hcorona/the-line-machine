@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="The Line Machine">
+    <title>The Line Machine - A Chrome Experiment</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header" role="banner">
+        <div class="header-content">
+            <div class="header-left">
+                <h1 class="app-title">the line machine</h1>
+                <div class="built-by">
+                    built by <a href="https://github.com/hcorona" target="_blank" rel="noopener noreferrer">@hcorona</a>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="shuffleBtn" class="emoji-action" aria-label="Shuffle" title="Shuffle">🔀</button>
+                <button id="exportBtn" class="emoji-action" aria-label="Download image" title="Save">💾</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main" role="main">
+        <section class="canvas-section" aria-label="Drawing Area">
+            <canvas id="drawingCanvas" width="1080" height="1080" tabindex="0" aria-label="Drawing Canvas"></canvas>
+        </section>
+    </main>
+
+    <!-- Controls Panel -->
+    <section class="bottom-sheet" id="controlsSheet" role="complementary" aria-label="Controls">
+        <div class="sheet-content">
+            <section class="sheet-section">
+                <h2 class="sheet-title">Configurator</h2>
+                <div class="control-row">
+                    <label for="lineCount">Lines</label>
+                    <input type="range" id="lineCount" min="1" max="100" value="10">
+                    <span id="lineCountValue">10</span>
+                </div>
+                <div class="control-row">
+                    <label for="lineThickness">Weight</label>
+                    <input type="range" id="lineThickness" min="1" max="30" value="10">
+                    <span id="lineThicknessValue">10px</span>
+                </div>
+                <div class="control-row">
+                    <label for="lineAlpha">Transparency</label>
+                    <input type="range" id="lineAlpha" min="0" max="100" value="100">
+                    <span id="lineAlphaValue">100%</span>
+                </div>
+            </section>
+            
+            <section class="sheet-section">
+                <h2 class="sheet-title">Line Mode</h2>
+                <div class="button-row">
+                    <button class="mode-btn active" data-mode="segmented">Segmented</button>
+                    <button class="mode-btn" data-mode="continuous">Continuous</button>
+                </div>
+            </section>
+            
+            <section class="sheet-section" id="customAnglesCard" style="display: none;">
+                <h2 class="sheet-title">Custom Angles</h2>
+                <div class="control-row">
+                    <label for="angle1">Line 1 Angle:</label>
+                    <input type="number" id="angle1" min="-45" max="45" value="0" step="1">
+                    <span>degrees</span>
+                </div>
+                <div class="control-row">
+                    <label for="angle2">Line 2 Angle:</label>
+                    <input type="number" id="angle2" min="-45" max="45" value="5" step="1">
+                    <span>degrees</span>
+                </div>
+                <div class="control-row">
+                    <label for="angle3">Line 3 Angle:</label>
+                    <input type="number" id="angle3" min="-45" max="45" value="2" step="1">
+                    <span>degrees</span>
+                </div>
+                <div class="button-row">
+                    <button id="useCustomAngles" class="distribution-btn">Use Custom Angles</button>
+                </div>
+            </section>
+            
+            <section class="sheet-section">
+                <h2 class="sheet-title">Aspect Ratio</h2>
+                <div class="button-row">
+                    <button class="aspect-btn active" data-ratio="1:1">1:1</button>
+                    <button class="aspect-btn" data-ratio="4:3">4:3</button>
+                    <button class="aspect-btn" data-ratio="3:4">3:4</button>
+                    <button class="aspect-btn" data-ratio="16:9">16:9</button>
+                </div>
+            </section>
+            
+            <section class="sheet-section">
+                <h2 class="sheet-title">Distribution</h2>
+                <div class="button-row">
+                    <button class="distribution-btn active" data-distribution="normal">Normal</button>
+                    <button class="distribution-btn" data-distribution="exponential">Exponential</button>
+                </div>
+            </section>
+            
+            <section class="sheet-section">
+                <h2 class="sheet-title">Palette</h2>
+                <div class="button-row">
+                    <button class="color-btn" data-colors='["#000000", "#000000", "#000000"]'>Black</button>
+                    <button class="color-btn" data-colors='["#2c3e50", "#34495e", "#7f8c8d"]'>Gray</button>
+                    <button class="color-btn active" data-type="harmony">Color Harmony</button>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <footer class="empty-footer empty-footer-style"></footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
