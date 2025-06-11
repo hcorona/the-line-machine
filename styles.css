@@ -218,8 +218,8 @@ body {
 }
 .button-row button {
   flex: 1;
-  min-width: 120px;
-  padding: 12px 16px;
+  min-width: 80px;
+  padding: 10px 12px;
   border-radius: 20px;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -239,6 +239,13 @@ body {
 .button-row button:hover:not(.active) {
   background: #f1f3f4;
   border-color: #dadce0;
+}
+
+/* Aspect ratio buttons - extra compact */
+.aspect-btn {
+  min-width: 60px !important;
+  padding: 10px 8px !important;
+  font-size: 0.8rem !important;
 }
 
 .sheet-action {
@@ -314,6 +321,89 @@ button:focus {
   outline-offset: 2px;
 }
 
+/* Desktop Layout - Two Column */
+@media (min-width: 769px) {
+  body {
+    padding: 24px;
+    overflow-y: auto;
+  }
+  
+  .app-main {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+    align-items: start;
+    max-width: 1400px;
+  }
+  
+  .canvas-section {
+    position: static;
+    top: auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .aspect-controls {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-light);
+  }
+  
+  .aspect-controls .sheet-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  
+  .controls-column {
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  
+  .controls-column::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .controls-column::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .controls-column::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+  
+  .controls-column::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+  }
+  
+  .bottom-sheet {
+    margin-bottom: 0;
+    max-height: none;
+    box-shadow: var(--shadow-light);
+  }
+  
+  /* Hide mobile aspect controls on desktop */
+  .aspect-section-mobile {
+    display: none;
+  }
+}
+
 /* Responsive - Mobile */
 @media (max-width: 768px) {
   html, body {
@@ -378,12 +468,53 @@ button:focus {
     font-size: 0.8rem;
     border-radius: 16px;
   }
+  
+  /* Mobile aspect ratio buttons */
+  .aspect-btn {
+    min-width: 0 !important;
+    padding: 8px 6px !important;
+    font-size: 0.75rem !important;
+  }
   /* .actions-row {
     gap: 8px;
   } */
   .sheet-action {
     width: 44px;
     height: 44px;
+  }
+  
+  /* Hide desktop aspect controls on mobile */
+  .aspect-controls {
+    display: none;
+  }
+  
+  /* Show mobile aspect controls */
+  .aspect-section-mobile {
+    display: block;
+  }
+  
+  /* Mobile controls column */
+  .controls-column {
+    display: contents;
+  }
+  
+  /* Mobile angle inputs */
+  .angle-inputs-horizontal {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  
+  .angle-label-compact {
+    font-size: 0.75rem;
+  }
+  
+  .angle-inputs-row {
+    gap: 6px;
+  }
+  
+  .angle-input-compact {
+    padding: 8px 6px;
+    font-size: 0.8rem;
   }
 }
 
@@ -421,6 +552,55 @@ input[type="number"]:focus {
   box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
 }
 
+/* Custom Angles Section Styling - Horizontal Compact Layout */
+.angle-inputs-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.angle-labels-row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.angle-label-compact {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.angle-inputs-row {
+  display: flex;
+  gap: 8px;
+}
+
+.angle-input-compact {
+  flex: 1;
+  padding: 10px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.875rem;
+  text-align: center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 0;
+  width: 100%;
+}
+
+.angle-input-compact:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
 a, a:visited {
   color: #ffd600;
   text-decoration: underline;
@@ -450,6 +630,10 @@ a:hover, a:focus {
 .emoji-action:active, .emoji-action:focus {
   background: rgba(255,255,255,0.18);
   outline: none;
+}
+
+.emoji-action.export-success {
+  background: var(--success) !important;
 }
 
 /* New class for the empty footer style */

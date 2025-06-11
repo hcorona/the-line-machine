@@ -313,11 +313,14 @@ function init() {
         btn.addEventListener('touchend', removeTouchFeedback);
     });
     
-    // Add custom angles event listeners
-    document.getElementById('useCustomAngles').addEventListener('click', toggleCustomAngles);
-    document.getElementById('angle1').addEventListener('input', updateCustomAngles);
-    document.getElementById('angle2').addEventListener('input', updateCustomAngles);
-    document.getElementById('angle3').addEventListener('input', updateCustomAngles);
+    // Add custom angles event listeners - check if elements exist first
+    const angle1 = document.getElementById('angle1');
+    const angle2 = document.getElementById('angle2');
+    const angle3 = document.getElementById('angle3');
+    
+    if (angle1) angle1.addEventListener('input', updateCustomAngles);
+    if (angle2) angle2.addEventListener('input', updateCustomAngles);
+    if (angle3) angle3.addEventListener('input', updateCustomAngles);
     
     // Add window resize listener for mobile orientation changes
     window.addEventListener('resize', handleResize);
@@ -534,9 +537,11 @@ function generateLinePaths(lineCount) {
                 // Use custom angles, cycling through the 3 angles
                 const angleIndex = (i - 1) % config.customAngles.length;
                 angle = config.customAngles[angleIndex] * (Math.PI / 180); // Convert degrees to radians
+
             } else {
                 // Use distribution-based angle
                 angle = getFixedAngle();
+
             }
             
             // Calculate end point based on angle
@@ -686,25 +691,15 @@ function exportToPNG() {
 function showExportFeedback() {
     const originalText = exportBtn.textContent;
     exportBtn.textContent = 'Exported!';
-    exportBtn.style.background = '#28a745'; // Consider using CSS classes for state changes
+    exportBtn.classList.add('export-success');
     
     setTimeout(() => {
         exportBtn.textContent = originalText;
-        exportBtn.style.background = '#6f42c1'; // Consider using CSS classes for state changes
+        exportBtn.classList.remove('export-success');
     }, 2000);
 }
 
-// Draw line - REMOVING AS UNUSED
-/*
-function drawLine(startX, startY, endX, endY, width = config.lineWidth, color = '#333333') {
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.lineTo(endX, endY);
-    ctx.lineWidth = width;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-}
-*/
+
 
 // Select distribution function
 function selectDistribution(event) {
@@ -731,45 +726,56 @@ function selectMode(event) {
     event.target.classList.add('active');
     // Update current mode
     config.currentMode = event.target.dataset.mode;
-    // Only try to show/hide custom angles if the element exists
+    
+    // Show/hide custom angles section
     const customAnglesCard = document.getElementById('customAnglesCard');
     if (customAnglesCard) {
         if (config.currentMode === 'continuous') {
             customAnglesCard.style.display = 'flex';
+            // Automatically enable custom angles when continuous mode is selected
+            config.useCustomAngles = true;
         } else {
             customAnglesCard.style.display = 'none';
             config.useCustomAngles = false;
-            const useCustomAnglesBtn = document.getElementById('useCustomAngles');
-            if (useCustomAnglesBtn) useCustomAnglesBtn.classList.remove('active');
         }
     }
+    
+    // Show/hide distribution section based on mode
+    const distributionSection = document.getElementById('distributionSection');
+    if (distributionSection) {
+        if (config.currentMode === 'continuous') {
+            distributionSection.style.display = 'none';
+        } else {
+            distributionSection.style.display = 'block';
+        }
+    }
+    
     // Regenerate drawing with new mode
     generateDrawing();
 }
 
-// Toggle custom angles mode
-function toggleCustomAngles() {
-    const button = document.getElementById('useCustomAngles');
-    config.useCustomAngles = !config.useCustomAngles;
-    
-    if (config.useCustomAngles) {
-        button.classList.add('active');
-        updateCustomAngles(); // Update angles from inputs
-    } else {
-        button.classList.remove('active');
-    }
-    
-    generateDrawing();
-}
+
 
 // Update custom angles from input fields
 function updateCustomAngles() {
-    if (config.useCustomAngles) {
-        config.customAngles[0] = parseFloat(document.getElementById('angle1').value);
-        config.customAngles[1] = parseFloat(document.getElementById('angle2').value);
-        config.customAngles[2] = parseFloat(document.getElementById('angle3').value);
-        generateDrawing();
+    // Check if elements exist before accessing them
+    const angle1 = document.getElementById('angle1');
+    const angle2 = document.getElementById('angle2');
+    const angle3 = document.getElementById('angle3');
+    
+    if (!angle1 || !angle2 || !angle3) {
+        return;
     }
+    
+    // Automatically enable custom angles when inputs change
+    config.useCustomAngles = true;
+    config.customAngles[0] = parseFloat(angle1.value);
+    config.customAngles[1] = parseFloat(angle2.value);
+    config.customAngles[2] = parseFloat(angle3.value);
+    
+
+    
+    generateDrawing();
 }
 
 // Get random palette for initial load
