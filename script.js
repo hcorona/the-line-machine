@@ -326,15 +326,19 @@ function init() {
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleOrientationChange);
     
-    // Prevent iOS zoom on double tap
+    // Prevent iOS zoom on double tap but allow scrolling
     let lastTouchEnd = 0;
     document.addEventListener('touchend', function (event) {
         const now = (new Date()).getTime();
         if (now - lastTouchEnd <= 300) {
-            event.preventDefault();
+            // Only prevent default if the target is not scrollable content
+            const target = event.target.closest('.sheet-content, .controls-column, .bottom-sheet');
+            if (!target) {
+                event.preventDefault();
+            }
         }
         lastTouchEnd = now;
-    }, false);
+    }, { passive: false });
 
     const shuffleBtn = document.getElementById('shuffleBtn');
     shuffleBtn.addEventListener('click', () => {

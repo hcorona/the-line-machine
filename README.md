@@ -52,3 +52,4 @@ A creative art generation tool that creates beautiful abstract line compositions
 
 This project was built with Built with ❤️ by [@hcorona](https://github.com/hcorona) using [Cursor](https://cursor.sh/) and its AI tools as a fun personal experiment in creative vibe coding and generative art.
 
+ 
