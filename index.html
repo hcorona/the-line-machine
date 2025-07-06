@@ -56,16 +56,19 @@
                         <div class="control-row">
                             <label for="lineCount">Lines</label>
                             <input type="range" id="lineCount" min="1" max="100" value="10">
+                            <input type="number" id="lineCountInput" min="1" max="100" value="10" class="config-input">
                             <span id="lineCountValue">10</span>
                         </div>
                         <div class="control-row">
                             <label for="lineThickness">Weight</label>
                             <input type="range" id="lineThickness" min="1" max="30" value="10">
+                            <input type="number" id="lineThicknessInput" min="1" max="30" value="10" class="config-input">
                             <span id="lineThicknessValue">10px</span>
                         </div>
                         <div class="control-row">
                             <label for="lineAlpha">Transparency</label>
                             <input type="range" id="lineAlpha" min="0" max="100" value="100">
+                            <input type="number" id="lineAlphaInput" min="0" max="100" value="100" class="config-input">
                             <span id="lineAlphaValue">100%</span>
                         </div>
                     </section>
@@ -75,6 +78,7 @@
                         <div class="button-row">
                             <button class="mode-btn active" data-mode="segmented">Segmented</button>
                             <button class="mode-btn" data-mode="continuous">Continuous</button>
+                            <button class="mode-btn" data-mode="rectangle">Rectangle</button>
                         </div>
                     </section>
                     
@@ -118,6 +122,27 @@
                             <button class="color-btn" data-colors='["#000000", "#000000", "#000000"]'>Black</button>
                             <button class="color-btn" data-colors='["#2c3e50", "#34495e", "#7f8c8d"]'>Gray</button>
                             <button class="color-btn active" data-type="harmony">Color Harmony</button>
+                        </div>
+                        <div id="paletteNameDisplay" class="palette-name-display"></div>
+                        <div class="hex-color-section">
+                            <h3 class="hex-color-title">Custom Colors</h3>
+                            <div class="hex-color-inputs">
+                                <div class="hex-color-input">
+                                    <label for="primaryColor">Primary</label>
+                                    <input type="color" id="primaryColor" value="#FF0054" class="color-picker">
+                                    <input type="text" id="primaryColorHex" value="#FF0054" class="hex-input" placeholder="#FF0054">
+                                </div>
+                                <div class="hex-color-input">
+                                    <label for="secondaryColor">Secondary</label>
+                                    <input type="color" id="secondaryColor" value="#00B2FF" class="color-picker">
+                                    <input type="text" id="secondaryColorHex" value="#00B2FF" class="hex-input" placeholder="#00B2FF">
+                                </div>
+                                <div class="hex-color-input">
+                                    <label for="tertiaryColor">Tertiary</label>
+                                    <input type="color" id="tertiaryColor" value="#FFD600" class="color-picker">
+                                    <input type="text" id="tertiaryColorHex" value="#FFD600" class="hex-input" placeholder="#FFD600">
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>

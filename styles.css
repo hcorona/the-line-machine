@@ -13,6 +13,11 @@
   --accent-hover: #1557b0;
   --success: #137333;
   --error: #d93025;
+  --app-title-color: #111111;
+  --built-by-color: #888888;
+  --button-hover-bg: #f1f3f4;
+  --button-hover-border: #dadce0;
+  --range-track-bg: #dadce0;
 }
 
 html, body {
@@ -39,7 +44,7 @@ body {
   top: 0;
   z-index: 10;
   height: auto;
-  background: #fff;
+  background: var(--surface);
   border-bottom: none;
   border-radius: 0;
   box-shadow: none;
@@ -87,14 +92,14 @@ body {
 .app-title {
   font-size: 1.5rem;
   font-weight: 500;
-  color: #111;
+  color: var(--app-title-color);
   letter-spacing: -0.01em;
   text-transform: none;
   margin: 0;
   line-height: 1;
 }
 .built-by {
-  color: #888 !important;
+  color: var(--built-by-color) !important;
   margin-top: 2px;
   font-size: 0.85rem;
   text-align: left;
@@ -208,6 +213,129 @@ body {
   font-size: 0.875rem;
   color: var(--text-secondary);
   font-weight: 500;
+}
+
+.config-input {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--surface);
+  text-align: center;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.config-input::-webkit-outer-spin-button,
+.config-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.config-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.palette-name-display {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 12px 0 16px 0;
+  padding: 8px 12px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  font-style: italic;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.palette-name-display:empty {
+  display: none;
+}
+
+.hex-color-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.hex-color-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.hex-color-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hex-color-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hex-color-input label {
+  flex: 0 0 80px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.color-picker {
+  width: 40px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.color-picker:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.hex-input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--surface);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  transition: border-color 0.2s;
+}
+
+.hex-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
 }
 .button-row {
   display: flex;
@@ -329,7 +457,7 @@ button:focus {
   
   .app-main {
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 450px;
     gap: 32px;
     align-items: start;
     max-width: 1400px;
@@ -372,6 +500,7 @@ button:focus {
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
+    width: 450px;
   }
   
   .controls-column::-webkit-scrollbar {

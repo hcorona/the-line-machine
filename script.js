@@ -1,92 +1,111 @@
 // Color palettes: each palette has 3 highly distinct colors and a random two-word English name
 const colorPalettes = [
-  { name: "crystal echo", colors: ["#FF0054", "#00B2FF", "#FFD600"] },
-  { name: "neon thunder", colors: ["#00FFB3", "#FF2A6D", "#3A86FF"] },
-  { name: "vivid forest", colors: ["#FFBE0B", "#8338EC", "#00B140"] },
-  { name: "electric dusk", colors: ["#FF006E", "#00F0FF", "#FFB300"] },
-  { name: "cosmic blaze", colors: ["#FF1B1C", "#00FF87", "#3A86FF"] },
-  { name: "tiger mint", colors: ["#FF6F00", "#00FFB3", "#3A86FF"] },
-  { name: "plasma wave", colors: ["#FF0054", "#00F0FF", "#FFD600"] },
-  { name: "cobalt flame", colors: ["#3A86FF", "#FF006E", "#FFD600"] },
-  { name: "sunset glitch", colors: ["#FFBE0B", "#8338EC", "#FF006E"] },
-  { name: "acid jungle", colors: ["#00FF87", "#FF1B1C", "#FFD600"] },
-  { name: "pixel storm", colors: ["#FF0054", "#00B2FF", "#FFBE0B"] },
-  { name: "chrome berry", colors: ["#8338EC", "#FF2A6D", "#FFD600"] },
-  { name: "laser canyon", colors: ["#00F0FF", "#FFB300", "#FF006E"] },
-  { name: "signal frost", colors: ["#00FFB3", "#FF1B1C", "#3A86FF"] },
-  { name: "hyper lemon", colors: ["#FFD600", "#00B2FF", "#FF0054"] },
-  { name: "optic magma", colors: ["#FF2A6D", "#00FF87", "#3A86FF"] },
-  { name: "prism riot", colors: ["#FFBE0B", "#00F0FF", "#FF006E"] },
-  { name: "static coral", colors: ["#FF1B1C", "#00B2FF", "#FFD600"] },
-  { name: "turbo grape", colors: ["#8338EC", "#FFB300", "#00FFB3"] },
-  { name: "lunar blaze", colors: ["#FF0054", "#FFD600", "#00FF87"] },
-  { name: "neon canyon", colors: ["#00F0FF", "#FF2A6D", "#FFBE0B"] },
-  { name: "signal mint", colors: ["#00FFB3", "#FF006E", "#FFD600"] },
-  { name: "optic berry", colors: ["#8338EC", "#00B2FF", "#FF1B1C"] },
-  { name: "pixel magma", colors: ["#FFB300", "#00FF87", "#FF0054"] },
-  { name: "chrome dusk", colors: ["#3A86FF", "#FFD600", "#FF2A6D"] },
-  { name: "tiger frost", colors: ["#00FFB3", "#FFBE0B", "#FF006E"] },
-  { name: "vivid glitch", colors: ["#FF1B1C", "#00F0FF", "#8338EC"] },
-  { name: "electric coral", colors: ["#FF0054", "#FFD600", "#00B2FF"] },
-  { name: "cosmic canyon", colors: ["#00FF87", "#FFB300", "#3A86FF"] },
-  { name: "plasma storm", colors: ["#FF2A6D", "#00B2FF", "#FFD600"] },
-  { name: "sunset riot", colors: ["#FFBE0B", "#00FFB3", "#FF1B1C"] },
-  { name: "acid dusk", colors: ["#00F0FF", "#FF006E", "#FFD600"] },
-  { name: "laser mint", colors: ["#00FFB3", "#FFB300", "#8338EC"] },
-  { name: "chrome magma", colors: ["#FF0054", "#FFD600", "#3A86FF"] },
-  { name: "optic storm", colors: ["#00B2FF", "#FF2A6D", "#FFBE0B"] },
-  { name: "hyper frost", colors: ["#00FF87", "#FF1B1C", "#FFD600"] },
-  { name: "prism dusk", colors: ["#FF006E", "#00F0FF", "#FFBE0B"] },
-  { name: "static grape", colors: ["#8338EC", "#FFD600", "#00FFB3"] },
-  { name: "turbo berry", colors: ["#FF2A6D", "#00B2FF", "#FFB300"] },
-  { name: "lunar jungle", colors: ["#00FF87", "#FFBE0B", "#FF0054"] },
-  { name: "neon blaze", colors: ["#FF1B1C", "#00F0FF", "#FFD600"] },
-  { name: "signal canyon", colors: ["#00B2FF", "#FF006E", "#FFBE0B"] },
-  { name: "optic frost", colors: ["#00FFB3", "#8338EC", "#FFD600"] },
-  { name: "pixel dusk", colors: ["#FFB300", "#00F0FF", "#FF0054"] },
-  { name: "chrome riot", colors: ["#FF2A6D", "#FFD600", "#3A86FF"] },
-  { name: "tiger coral", colors: ["#FFBE0B", "#00FF87", "#FF1B1C"] },
-  { name: "vivid mint", colors: ["#00FFB3", "#FFB300", "#FF0054"] },
-  { name: "electric storm", colors: ["#00F0FF", "#FF2A6D", "#FFD600"] },
-  { name: "cosmic dusk", colors: ["#FF1B1C", "#00B2FF", "#FFBE0B"] },
-  { name: "plasma frost", colors: ["#00FF87", "#FFD600", "#3A86FF"] },
-  { name: "sunset berry", colors: ["#8338EC", "#FFB300", "#FF0054"] },
-  { name: "acid riot", colors: ["#FF2A6D", "#00F0FF", "#FFD600"] },
-  { name: "laser dusk", colors: ["#FF006E", "#00FFB3", "#FFBE0B"] },
-  { name: "chrome jungle", colors: ["#00FF87", "#FFD600", "#FF1B1C"] },
-  { name: "optic coral", colors: ["#FF0054", "#00B2FF", "#FFB300"] },
-  { name: "hyper berry", colors: ["#8338EC", "#FFD600", "#00F0FF"] },
-  { name: "prism mint", colors: ["#00FFB3", "#FF2A6D", "#FFD600"] },
-  { name: "static dusk", colors: ["#FFB300", "#00F0FF", "#FF006E"] },
-  { name: "turbo frost", colors: ["#00FF87", "#FFD600", "#3A86FF"] },
-  { name: "lunar riot", colors: ["#FF2A6D", "#00B2FF", "#FFD600"] },
-  { name: "neon coral", colors: ["#FF0054", "#00F0FF", "#FFBE0B"] },
-  { name: "signal dusk", colors: ["#FFB300", "#00FFB3", "#FF006E"] },
-  { name: "optic jungle", colors: ["#00FF87", "#FFD600", "#8338EC"] },
-  { name: "pixel riot", colors: ["#FF2A6D", "#00B2FF", "#FFD600"] },
-  { name: "chrome mint", colors: ["#00FFB3", "#FFB300", "#FF0054"] },
-  { name: "tiger dusk", colors: ["#FF006E", "#FFD600", "#3A86FF"] },
-  { name: "vivid coral", colors: ["#FF0054", "#00F0FF", "#FFD600"] },
-  { name: "electric berry", colors: ["#8338EC", "#FFB300", "#00FFB3"] },
-  { name: "cosmic frost", colors: ["#00FF87", "#FFD600", "#FF2A6D"] },
-  { name: "plasma dusk", colors: ["#FF006E", "#00F0FF", "#FFBE0B"] },
-  { name: "sunset mint", colors: ["#00FFB3", "#FFD600", "#3A86FF"] },
-  { name: "acid berry", colors: ["#8338EC", "#FF2A6D", "#FFD600"] },
-  { name: "laser riot", colors: ["#FF2A6D", "#00F0FF", "#FFD600"] },
-  { name: "chrome dusk", colors: ["#FFB300", "#00FFB3", "#FF0054"] },
-  { name: "optic mint", colors: ["#00FFB3", "#FFD600", "#3A86FF"] },
-  { name: "hyper dusk", colors: ["#FF006E", "#00F0FF", "#FFBE0B"] },
-  { name: "prism coral", colors: ["#FF0054", "#FFD600", "#00B2FF"] },
-  { name: "static frost", colors: ["#00FF87", "#FFD600", "#3A86FF"] },
-  { name: "turbo dusk", colors: ["#FFB300", "#00F0FF", "#FF2A6D"] },
-  { name: "lunar coral", colors: ["#FF0054", "#00FFB3", "#FFD600"] },
-  { name: "neon berry", colors: ["#8338EC", "#FFD600", "#00F0FF"] },
-  { name: "signal riot", colors: ["#FF2A6D", "#00B2FF", "#FFD600"] },
-  { name: "optic dusk", colors: ["#FFB300", "#00F0FF", "#FF006E"] },
-  { name: "pixel coral", colors: ["#FF0054", "#FFD600", "#00B2FF"] },
-  { name: "chrome berry", colors: ["#8338EC", "#FFB300", "#00FFB3"] },
-  { name: "tiger frost", colors: ["#00FF87", "#FFD600", "#3A86FF"] }
-];
+    { name: "crystal echo", colors: ["#FF0054", "#00B2FF", "#FFD600"] },
+    { name: "neon thunder", colors: ["#00FFB3", "#FF2A6D", "#3A86FF"] },
+    { name: "vivid forest", colors: ["#FFBE0B", "#8338EC", "#00B140"] },
+    { name: "electric dusk", colors: ["#FF006E", "#00F0FF", "#FFB300"] },
+    { name: "cosmic blaze", colors: ["#FF1B1C", "#00FF87", "#3A86FF"] },
+    { name: "tiger mint", colors: ["#FF6F00", "#00FFB3", "#3A86FF"] },
+    { name: "plasma wave", colors: ["#FF0054", "#00F0FF", "#FFD600"] },
+    { name: "cobalt flame", colors: ["#3A86FF", "#FF006E", "#FFD600"] },
+    { name: "sunset glitch", colors: ["#FFBE0B", "#8338EC", "#FF006E"] },
+    { name: "acid jungle", colors: ["#00FF87", "#FF1B1C", "#FFD600"] },
+    { name: "pixel storm", colors: ["#FF0054", "#00B2FF", "#FFBE0B"] },
+    { name: "chrome berry", colors: ["#8338EC", "#FF2A6D", "#FFD600"] },
+    { name: "laser canyon", colors: ["#00F0FF", "#FFB300", "#FF006E"] },
+    { name: "signal frost", colors: ["#00FFB3", "#FF1B1C", "#3A86FF"] },
+    { name: "hyper lemon", colors: ["#FFD600", "#00B2FF", "#FF0054"] },
+    { name: "optic magma", colors: ["#FF2A6D", "#00FF87", "#3A86FF"] },
+    { name: "prism riot", colors: ["#FFBE0B", "#00F0FF", "#FF006E"] },
+    { name: "static coral", colors: ["#FF1B1C", "#00B2FF", "#FFD600"] },
+    { name: "turbo grape", colors: ["#8338EC", "#FFB300", "#00FFB3"] },
+    { name: "lunar blaze", colors: ["#FF0054", "#FFD600", "#00FF87"] },
+    { name: "neon canyon", colors: ["#00F0FF", "#FF2A6D", "#FFBE0B"] },
+    { name: "signal mint", colors: ["#00FFB3", "#FF006E", "#FFD600"] },
+    { name: "optic berry", colors: ["#8338EC", "#00B2FF", "#FF1B1C"] },
+    { name: "pixel magma", colors: ["#FFB300", "#00FF87", "#FF0054"] },
+    { name: "chrome dusk", colors: ["#3A86FF", "#FFD600", "#FF2A6D"] },
+    { name: "tiger frost", colors: ["#00FFB3", "#FFBE0B", "#FF006E"] },
+    { name: "vivid glitch", colors: ["#FF1B1C", "#00F0FF", "#8338EC"] },
+    { name: "electric coral", colors: ["#FF0054", "#FFD600", "#00B2FF"] },
+    { name: "cosmic canyon", colors: ["#00FF87", "#FFB300", "#3A86FF"] },
+    { name: "plasma storm", colors: ["#FF2A6D", "#00B2FF", "#FFD600"] },
+    { name: "sunset riot", colors: ["#FFBE0B", "#00FFB3", "#FF1B1C"] },
+    { name: "acid dusk", colors: ["#00F0FF", "#FF006E", "#FFD600"] },
+    { name: "laser mint", colors: ["#00FFB3", "#FFB300", "#8338EC"] },
+    { name: "chrome magma", colors: ["#FF0054", "#FFD600", "#3A86FF"] },
+    { name: "optic storm", colors: ["#00B2FF", "#FF2A6D", "#FFBE0B"] },
+    { name: "hyper frost", colors: ["#00FF87", "#FF1B1C", "#FFD600"] },
+    { name: "prism dusk", colors: ["#FF006E", "#00F0FF", "#FFBE0B"] },
+    { name: "static grape", colors: ["#8338EC", "#FFD600", "#00FFB3"] },
+    { name: "turbo berry", colors: ["#FF2A6D", "#00B2FF", "#FFB300"] },
+    { name: "lunar jungle", colors: ["#00FF87", "#FFBE0B", "#FF0054"] },
+    { name: "neon blaze", colors: ["#FF1B1C", "#00F0FF", "#FFD600"] },
+    { name: "signal canyon", colors: ["#00B2FF", "#FF006E", "#FFBE0B"] },
+    { name: "optic frost", colors: ["#00FFB3", "#8338EC", "#FFD600"] },
+    { name: "pixel dusk", colors: ["#FFB300", "#00F0FF", "#FF0054"] },
+    { name: "chrome riot", colors: ["#FF2A6D", "#FFD600", "#3A86FF"] },
+    { name: "tiger coral", colors: ["#FFBE0B", "#00FF87", "#FF1B1C"] },
+    { name: "vivid mint", colors: ["#00FFB3", "#FFB300", "#FF0054"] },
+    { name: "electric storm", colors: ["#00F0FF", "#FF2A6D", "#FFD600"] },
+    { name: "cosmic frost", colors: ["#00FF87", "#FFD600", "#FF2A6D"] },
+    { name: "infra blaze", colors: ["#FF3B30", "#FFD600", "#1E1E1E"] },
+    { name: "sunset venom", colors: ["#FF6F00", "#FF2A6D", "#001F3F"] },
+    { name: "voltage drip", colors: ["#FCEE09", "#00F0FF", "#0A0A0A"] },
+    { name: "arctic chrome", colors: ["#00F0FF", "#C0C0C0", "#3A86FF"] },
+    { name: "neon lava", colors: ["#FF0054", "#FF8E00", "#2B2B2B"] },
+    { name: "electric jungle", colors: ["#00FF87", "#FF1B1C", "#002F2F"] },
+    { name: "plasma teal", colors: ["#00B2FF", "#00FFB3", "#0E0E0E"] },
+    { name: "heat surge", colors: ["#FFD600", "#FF2A6D", "#4A4A4A"] },
+    { name: "midnight citrus", colors: ["#FFB300", "#001F3F", "#FFD600"] },
+    { name: "burnout neon", colors: ["#FF006E", "#00F0FF", "#262626"] },
+    { name: "cyber blaze", colors: ["#FF1B1C", "#00FFB3", "#202020"] },
+    { name: "ice magma", colors: ["#00F0FF", "#FF0054", "#121212"] },
+    { name: "steel coral", colors: ["#FF2A6D", "#3A86FF", "#B0BEC5"] },
+    { name: "storm glitch", colors: ["#00B2FF", "#FFD600", "#263238"] },
+    { name: "toxic dusk", colors: ["#00FF87", "#FF006E", "#333333"] },
+    { name: "turbo flare", colors: ["#FFBE0B", "#00F0FF", "#000000"] },
+    { name: "glacier venom", colors: ["#00FFB3", "#8338EC", "#111111"] },
+    { name: "supernova heat", colors: ["#FF2A6D", "#FFD600", "#2F2F2F"] },
+    { name: "carbon mint", colors: ["#00FFB3", "#3A86FF", "#2C2C2C"] },
+    { name: "hyperstrike", colors: ["#FF0054", "#FFD600", "#1B1B1B"] },
+    { name: "citrus blast", colors: ["#FFB300", "#00F0FF", "#232323"] },
+    { name: "lava burst", colors: ["#FF1B1C", "#FFBE0B", "#001F1F"] },
+    { name: "midnight plasma", colors: ["#00F0FF", "#FF2A6D", "#181818"] },
+    { name: "hurricane chrome", colors: ["#00B2FF", "#FFD600", "#3A3A3A"] },
+    { name: "matrix dusk", colors: ["#00FFB3", "#FF0054", "#101010"] },
+    { name: "cyber citrus", colors: ["#FFB300", "#00F0FF", "#000000"] },
+    { name: "heat frost", colors: ["#FF2A6D", "#00FF87", "#2D2D2D"] },
+    { name: "optic flame", colors: ["#FF006E", "#FFD600", "#3A3A3A"] },
+    { name: "tropical steel", colors: ["#00FFB3", "#3A86FF", "#1E1E1E"] },
+    { name: "electric mirage", colors: ["#FF0054", "#00B2FF", "#282828"] },
+    { name: "sunrise voltage", colors: ["#FFBE0B", "#FF1B1C", "#121212"] },
+    { name: "nuclear frost", colors: ["#00F0FF", "#FFD600", "#0C0C0C"] },
+    { name: "optic overload", colors: ["#00B2FF", "#FF2A6D", "#101010"] },
+    { name: "lava mint", colors: ["#00FFB3", "#FF0054", "#222222"] },
+    { name: "neon carbon", colors: ["#FF006E", "#00F0FF", "#1A1A1A"] },
+    { name: "plasma burst", colors: ["#FF1B1C", "#FFD600", "#191919"] },
+    { name: "signal heat", colors: ["#00F0FF", "#FFBE0B", "#333333"] },
+    { name: "chrome overload", colors: ["#FF2A6D", "#00B2FF", "#1F1F1F"] },
+    { name: "tiger glare", colors: ["#FFD600", "#FF0054", "#121212"] },
+    { name: "vivid shock", colors: ["#FFB300", "#00FFB3", "#1B1B1B"] },
+    { name: "electric surge", colors: ["#FF006E", "#FFD600", "#2E2E2E"] },
+    { name: "cosmic pulse", colors: ["#00F0FF", "#FF2A6D", "#262626"] },
+    { name: "plasma glitch", colors: ["#FF1B1C", "#00B2FF", "#0A0A0A"] },
+    { name: "sunset drift", colors: ["#FFD600", "#FF0054", "#3A3A3A"] },
+    { name: "acid flash", colors: ["#00FF87", "#FFBE0B", "#181818"] },
+    { name: "laser heat", colors: ["#FF2A6D", "#00F0FF", "#101010"] },
+    { name: "chrome pulse", colors: ["#00B2FF", "#FFD600", "#1E1E1E"] },
+    { name: "optic blaze", colors: ["#FF0054", "#FFBE0B", "#222222"] },
+    { name: "pixel glare", colors: ["#FF006E", "#00FFB3", "#121212"] },
+    { name: "turbo storm", colors: ["#00F0FF", "#FF1B1C", "#262626"] },
+    { name: "lunar heat", colors: ["#FF2A6D", "#FFD600", "#000000"] },
+    { name: "neon flame", colors: ["#FFD600", "#00B2FF", "#1A1A1A"] },
+    { name: "electric storm", colors: ["#FF0054", "#00FFB3", "#333333"] },
+    { name: "cosmic charge", colors: ["#FFBE0B", "#00F0FF", "#222222"] },
+    { name: "plasma frost", colors: ["#00FF87", "#FF2A6D", "#121212"] },
+    { name: "sunset surge", colors: ["#FF006E", "#FFD600", "#1F1F1F"] },
+  ];
 
 // Get canvas and context
 const canvas = document.getElementById('drawingCanvas');
@@ -95,16 +114,33 @@ const ctx = canvas.getContext('2d');
 // Get control elements
 const lineCountSlider = document.getElementById('lineCount');
 const lineCountValue = document.getElementById('lineCountValue');
+const lineCountInput = document.getElementById('lineCountInput');
 const lineThicknessSlider = document.getElementById('lineThickness');
 const lineThicknessValue = document.getElementById('lineThicknessValue');
+const lineThicknessInput = document.getElementById('lineThicknessInput');
 const lineAlphaSlider = document.getElementById('lineAlpha');
 const lineAlphaValue = document.getElementById('lineAlphaValue');
+const lineAlphaInput = document.getElementById('lineAlphaInput');
 // const generateBtn = document.getElementById('generateBtn'); // Not used
 const exportBtn = document.getElementById('exportBtn');
 const colorBtns = document.querySelectorAll('.color-btn');
 const distributionBtns = document.querySelectorAll('.distribution-btn');
 const aspectBtns = document.querySelectorAll('.aspect-btn');
 const modeBtns = document.querySelectorAll('.mode-btn');
+
+// Color picker elements
+const primaryColorPicker = document.getElementById('primaryColor');
+const primaryColorHex = document.getElementById('primaryColorHex');
+const secondaryColorPicker = document.getElementById('secondaryColor');
+const secondaryColorHex = document.getElementById('secondaryColorHex');
+const tertiaryColorPicker = document.getElementById('tertiaryColor');
+const tertiaryColorHex = document.getElementById('tertiaryColorHex');
+
+// Get random palette for initial load
+function getRandomPalette() {
+    const randomPalette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+    return randomPalette.colors;
+}
 
 // Drawing configuration with Instagram standard sizes
 const config = {
@@ -129,6 +165,9 @@ const config = {
 // Store current line paths and colors
 let currentLinePaths = [];
 let currentLineColors = [];
+
+// Store current rectangle data
+let currentRectangles = [];
 
 // Add these distribution functions:
 
@@ -231,22 +270,39 @@ function randomizeSettings() {
     const randomLineCount = Math.floor(Math.random() * 46) + 5;
     lineCountSlider.value = randomLineCount;
     lineCountValue.textContent = randomLineCount;
+    lineCountInput.value = randomLineCount;
     
     // Random weight (3-25)
     const randomWeight = Math.floor(Math.random() * 23) + 3;
     lineThicknessSlider.value = randomWeight;
     lineThicknessValue.textContent = randomWeight + 'px';
+    lineThicknessInput.value = randomWeight;
     config.lineWidth = randomWeight;
     
     // Random transparency (40-100%)
     const randomAlpha = Math.floor(Math.random() * 61) + 40;
     lineAlphaSlider.value = randomAlpha;
     lineAlphaValue.textContent = randomAlpha + '%';
+    lineAlphaInput.value = randomAlpha;
     config.lineAlpha = randomAlpha;
     
     // Random color harmony
     const randomPalette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
     config.currentColors = randomPalette.colors;
+    
+    // Update the palette name display
+    const paletteNameDisplay = document.getElementById('paletteNameDisplay');
+    if (paletteNameDisplay) {
+        paletteNameDisplay.textContent = randomPalette.name;
+    }
+    
+    // Update color pickers and hex inputs
+    primaryColorPicker.value = randomPalette.colors[0];
+    primaryColorHex.value = randomPalette.colors[0];
+    secondaryColorPicker.value = randomPalette.colors[1];
+    secondaryColorHex.value = randomPalette.colors[1];
+    tertiaryColorPicker.value = randomPalette.colors[2];
+    tertiaryColorHex.value = randomPalette.colors[2];
     
     // Update color button active state to show "Color Harmony" is selected
     colorBtns.forEach(btn => btn.classList.remove('active'));
@@ -282,6 +338,37 @@ function init() {
     lineCountSlider.addEventListener('input', throttle(updateLineCount, 100));
     lineThicknessSlider.addEventListener('input', throttle(updateLineThickness, 50));
     lineAlphaSlider.addEventListener('input', throttle(updateLineAlpha, 50));
+    
+    // Add event listeners for text input fields
+    lineCountInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            updateLineCountFromInput();
+            lineCountInput.blur();
+        }
+    });
+    lineThicknessInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            updateLineThicknessFromInput();
+            lineThicknessInput.blur();
+        }
+    });
+    lineAlphaInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            updateLineAlphaFromInput();
+            lineAlphaInput.blur();
+        }
+    });
+    
+    // Add event listeners for color pickers
+    primaryColorPicker.addEventListener('input', () => updateColorFromPicker('primary'));
+    secondaryColorPicker.addEventListener('input', () => updateColorFromPicker('secondary'));
+    tertiaryColorPicker.addEventListener('input', () => updateColorFromPicker('tertiary'));
+    
+    // Add event listeners for hex inputs
+    primaryColorHex.addEventListener('input', () => updateColorFromHex('primary'));
+    secondaryColorHex.addEventListener('input', () => updateColorFromHex('secondary'));
+    tertiaryColorHex.addEventListener('input', () => updateColorFromHex('tertiary'));
+    
     exportBtn.addEventListener('click', exportToPNG);
     
     // Add color palette event listeners
@@ -429,7 +516,6 @@ function scaleCanvasForMobile() {
 
 // Select aspect ratio
 function selectAspectRatio(event) {
-    // const aspectBtns = document.querySelectorAll('.aspect-btn'); // Already selected globally
     // Remove active class from all buttons
     aspectBtns.forEach(btn => btn.classList.remove('active'));
     
@@ -439,22 +525,28 @@ function selectAspectRatio(event) {
     // Update current ratio
     config.currentRatio = event.target.dataset.ratio;
     
-    // Update canvas size and regenerate
+    // Update canvas size without regenerating
     updateCanvasSize();
-    generateDrawing();
+    if (config.currentMode === 'rectangle') {
+        redrawCurrentRectangles();
+    } else {
+        redrawCurrentPaths();
+    }
 }
 
 // Update line count display and regenerate
 function updateLineCount() {
     const count = lineCountSlider.value;
     lineCountValue.textContent = count;
+    lineCountInput.value = count;
     generateDrawing();
 }
 
 // Update line thickness display and redraw with same paths
 function updateLineThickness() {
     const thickness = lineThicknessSlider.value;
-    lineThicknessValue.textContent = thickness;
+    lineThicknessValue.textContent = thickness + 'px';
+    lineThicknessInput.value = thickness;
     config.lineWidth = parseInt(thickness);
     redrawCurrentPaths();
 }
@@ -462,9 +554,115 @@ function updateLineThickness() {
 // Update line alpha display and update config.lineAlpha
 function updateLineAlpha() {
     const alpha = lineAlphaSlider.value;
-    lineAlphaValue.textContent = alpha;
+    lineAlphaValue.textContent = alpha + '%';
+    lineAlphaInput.value = alpha;
     config.lineAlpha = parseFloat(alpha);
-    redrawCurrentPaths();
+    
+    // Update transparency based on current mode
+    if (config.currentMode === 'rectangle') {
+        redrawCurrentRectangles();
+    } else {
+        redrawCurrentPaths();
+    }
+}
+
+// Update line count from text input
+function updateLineCountFromInput() {
+    const count = parseInt(lineCountInput.value);
+    if (count >= 1 && count <= 100) {
+        lineCountSlider.value = count;
+        lineCountValue.textContent = count;
+    generateDrawing();
+}
+}
+
+// Update line thickness from text input
+function updateLineThicknessFromInput() {
+    const thickness = parseInt(lineThicknessInput.value);
+    if (thickness >= 1 && thickness <= 30) {
+        lineThicknessSlider.value = thickness;
+        lineThicknessValue.textContent = thickness + 'px';
+        config.lineWidth = thickness;
+        redrawCurrentPaths();
+    }
+}
+
+// Update line alpha from text input
+function updateLineAlphaFromInput() {
+    const alpha = parseInt(lineAlphaInput.value);
+    if (alpha >= 0 && alpha <= 100) {
+        lineAlphaSlider.value = alpha;
+        lineAlphaValue.textContent = alpha + '%';
+        config.lineAlpha = parseFloat(alpha);
+        
+        // Update transparency based on current mode
+        if (config.currentMode === 'rectangle') {
+            redrawCurrentRectangles();
+        } else {
+            redrawCurrentPaths();
+        }
+    }
+}
+
+// Update color from color picker
+function updateColorFromPicker(colorType) {
+    let picker, hexInput;
+    switch(colorType) {
+        case 'primary':
+            picker = primaryColorPicker;
+            hexInput = primaryColorHex;
+            break;
+        case 'secondary':
+            picker = secondaryColorPicker;
+            hexInput = secondaryColorHex;
+            break;
+        case 'tertiary':
+            picker = tertiaryColorPicker;
+            hexInput = tertiaryColorHex;
+            break;
+    }
+    
+    const color = picker.value;
+    hexInput.value = color;
+    
+    // Update config colors
+    const colors = [primaryColorPicker.value, secondaryColorPicker.value, tertiaryColorPicker.value];
+    config.currentColors = colors;
+    
+    // Apply new colors to existing shapes
+    updateColors();
+}
+
+// Update color from hex input
+function updateColorFromHex(colorType) {
+    let picker, hexInput;
+    switch(colorType) {
+        case 'primary':
+            picker = primaryColorPicker;
+            hexInput = primaryColorHex;
+            break;
+        case 'secondary':
+            picker = secondaryColorPicker;
+            hexInput = secondaryColorHex;
+            break;
+        case 'tertiary':
+            picker = tertiaryColorPicker;
+            hexInput = tertiaryColorHex;
+            break;
+    }
+    
+    const hexValue = hexInput.value;
+    // Validate hex color format
+    if (/^#[0-9A-F]{6}$/i.test(hexValue)) {
+        picker.value = hexValue;
+        
+        // Update config colors
+        const colors = [primaryColorPicker.value, secondaryColorPicker.value, tertiaryColorPicker.value];
+        config.currentColors = colors;
+        
+        // Apply new colors to existing shapes
+        updateColors();
+    }
 }
 
 // Select color palette
@@ -479,13 +677,42 @@ function selectColorPalette(event) {
     if (event.target.dataset.type === 'harmony') {
         const randomPalette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
         config.currentColors = randomPalette.colors;
+        
+        // Update the palette name display
+        const paletteNameDisplay = document.getElementById('paletteNameDisplay');
+        if (paletteNameDisplay) {
+            paletteNameDisplay.textContent = randomPalette.name;
+        }
+        
+        // Update color pickers and hex inputs
+        primaryColorPicker.value = randomPalette.colors[0];
+        primaryColorHex.value = randomPalette.colors[0];
+        secondaryColorPicker.value = randomPalette.colors[1];
+        secondaryColorHex.value = randomPalette.colors[1];
+        tertiaryColorPicker.value = randomPalette.colors[2];
+        tertiaryColorHex.value = randomPalette.colors[2];
     } else {
         // Update current colors from data attribute
-        config.currentColors = JSON.parse(event.target.dataset.colors);
+        const colors = JSON.parse(event.target.dataset.colors);
+        config.currentColors = colors;
+        
+        // Clear the palette name display for non-harmony palettes
+        const paletteNameDisplay = document.getElementById('paletteNameDisplay');
+        if (paletteNameDisplay) {
+            paletteNameDisplay.textContent = '';
+        }
+        
+        // Update color pickers and hex inputs
+        primaryColorPicker.value = colors[0];
+        primaryColorHex.value = colors[0];
+        secondaryColorPicker.value = colors[1];
+        secondaryColorHex.value = colors[1];
+        tertiaryColorPicker.value = colors[2];
+        tertiaryColorHex.value = colors[2];
     }
     
-    // Regenerate drawing with new colors
-    generateDrawing();
+    // Apply new colors to existing shapes
+    updateColors();
 }
 
 // Get random color from current palette
@@ -493,237 +720,85 @@ function getRandomColor() {
     return config.currentColors[Math.floor(Math.random() * config.currentColors.length)];
 }
 
-// Generate new line paths and draw them
-function generateDrawing() {
-    const lineCount = parseInt(lineCountSlider.value);
+// Generate new rectangles with random sizes, positions, and angles
+function generateRectangles() {
+    currentRectangles = [];
+    const w = config.canvasWidth;
+    const h = config.canvasHeight;
     
+    function getRandomRect() {
+        // Use normal or exponential distribution for size and position
+        let rw, rh, rx, ry, angle;
+        if (config.currentDistribution === 'normal') {
+            rw = Math.max(80, Math.min(w * 0.8, Math.abs(normalRandom(w * 0.5, w * 0.18))));
+            rh = Math.max(80, Math.min(h * 0.8, Math.abs(normalRandom(h * 0.5, h * 0.18))));
+            rx = Math.max(0, Math.min(w - rw, normalRandom(w * 0.5, w * 0.22)));
+            ry = Math.max(0, Math.min(h - rh, normalRandom(h * 0.5, h * 0.22)));
+            angle = normalRandom(0, Math.PI/8); // random angle, mean 0, stddev ~22deg
+        } else {
+            rw = Math.max(80, Math.min(w * 0.8, exponentialRandom(1.2) * w * 0.5));
+            rh = Math.max(80, Math.min(h * 0.8, exponentialRandom(1.2) * h * 0.5));
+            rx = Math.max(0, Math.min(w - rw, exponentialRandom(1.2) * w * 0.5));
+            ry = Math.max(0, Math.min(h - rh, exponentialRandom(1.2) * h * 0.5));
+            angle = (Math.random() - 0.5) * Math.PI/2; // random angle, -45 to +45 deg
+        }
+        return {rw, rh, rx, ry, angle};
+    }
+    
+    // Generate 3 rectangles
+    for (let i = 0; i < 3; i++) {
+        currentRectangles.push(getRandomRect());
+    }
+    
+    // Draw them for the first time
+    redrawCurrentRectangles();
+}
+
+// Redraw existing rectangles with current colors and alpha
+function redrawCurrentRectangles() {
+    clearCanvas();
+    const colors = config.currentColors;
+    const alpha = config.lineAlpha / 100;
+    
+    currentRectangles.forEach((rect, index) => {
+        const color = colors[index % colors.length];
+        const {rw, rh, rx, ry, angle} = rect;
+        
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        // Move to rectangle center, rotate, then draw
+        ctx.translate(rx + rw/2, ry + rh/2);
+        ctx.rotate(angle);
+        ctx.fillStyle = color;
+        ctx.fillRect(-rw/2, -rh/2, rw, rh);
+        ctx.restore();
+    });
+}
+
+// Legacy function for backward compatibility - now just calls generateRectangles
+function drawRectangles() {
+    generateRectangles();
+}
+
+// Patch generateDrawing to support rectangle mode
+function generateDrawing() {
+    if (config.currentMode === 'rectangle') {
+        drawRectangles();
+        return;
+    }
+    const lineCount = parseInt(lineCountSlider.value);
     if (lineCount <= 0) {
         clearCanvas();
         return;
     }
-    
     // Generate new paths
     generateLinePaths(lineCount);
-    
     // Draw the paths
     redrawCurrentPaths();
 }
 
-// Generate line paths without drawing - FIXED PADDING
-function generateLinePaths(lineCount) {
-    currentLinePaths = [];
-    currentLineColors = [];
-    
-    // Calculate spacing between lines
-    const totalDrawingWidth = config.canvasWidth - config.lineWidth;
-    const spacing = totalDrawingWidth / (lineCount + 1);
-    
-    // Drawing area parameters - NO PADDING
-    const startY = 0;
-    const endY = config.canvasHeight;
-    
-    if (config.currentMode === 'continuous') {
-        // Continuous line mode - use custom angles or distribution-based angle
-        
-        for (let i = 1; i <= lineCount; i++) {
-            const startX = spacing * i + (config.lineWidth / 2);
-            
-            // Use consecutive colors instead of random
-            const colorIndex = (i - 1) % config.currentColors.length;
-            const lineColor = config.currentColors[colorIndex];
-            
-            const linePath = [];
-            currentLineColors.push(lineColor);
-            
-            // Calculate angle - either custom or from distribution
-            let angle;
-            if (config.useCustomAngles) {
-                // Use custom angles, cycling through the 3 angles
-                const angleIndex = (i - 1) % config.customAngles.length;
-                angle = config.customAngles[angleIndex] * (Math.PI / 180); // Convert degrees to radians
-
-            } else {
-                // Use distribution-based angle
-                angle = getFixedAngle();
-
-            }
-            
-            // Calculate end point based on angle
-            const canvasHeight = config.canvasHeight;
-            const deltaX = Math.sin(angle) * canvasHeight;
-            const endX = startX + deltaX;
-            
-            // Ensure end point stays within canvas bounds
-            const boundedEndX = Math.max(config.lineWidth/2, 
-                                Math.min(config.canvasWidth - config.lineWidth/2, endX));
-            
-            // Create straight line path
-            linePath.push({ x: startX, y: startY });
-            linePath.push({ x: boundedEndX, y: endY });
-            
-            currentLinePaths.push(linePath);
-        }
-    } else {
-        // Segmented line mode - original behavior
-        const baseSegmentLength = 100;
-        
-        for (let i = 1; i <= lineCount; i++) {
-            const startX = spacing * i + (config.lineWidth / 2);
-            const randomColor = getRandomColor();
-            
-            const linePath = [];
-            currentLineColors.push(randomColor);
-            
-            // Start position
-            let currentX = startX;
-            let currentY = startY;
-            linePath.push({ x: currentX, y: currentY });
-            
-            // Generate segments until we reach the bottom
-            while (currentY < endY - 10) {
-                const remainingHeight = endY - currentY;
-                let randomAngle = getRandomAngle();
-                
-                // Calculate segment length and ensure minimum vertical progress
-                let segmentLength = baseSegmentLength;
-                let deltaX = Math.sin(randomAngle) * segmentLength;
-                let deltaY = Math.cos(randomAngle) * segmentLength;
-                
-                // Ensure we make at least some vertical progress
-                if (Math.abs(deltaY) < 20) {
-                    deltaY = Math.max(20, remainingHeight);
-                    segmentLength = deltaY / Math.cos(randomAngle);
-                    deltaX = Math.sin(randomAngle) * segmentLength;
-                }
-                
-                // If this would overshoot the bottom, adjust to land exactly at bottom
-                if (currentY + deltaY > endY) {
-                    deltaY = endY - currentY;
-                    segmentLength = deltaY / Math.cos(randomAngle);
-                    deltaX = Math.sin(randomAngle) * segmentLength;
-                }
-                
-                const nextX = currentX + deltaX;
-                const nextY = currentY + deltaY;
-                
-                // Ensure we don't go outside canvas bounds horizontally
-                const boundedNextX = Math.max(config.lineWidth/2, 
-                                    Math.min(config.canvasWidth - config.lineWidth/2, nextX));
-                
-                linePath.push({ x: boundedNextX, y: nextY });
-                
-                // Update current position
-                currentX = boundedNextX;
-                currentY = nextY;
-            }
-            
-            currentLinePaths.push(linePath);
-        }
-    }
-}
-
-// Redraw existing paths with current settings
-function redrawCurrentPaths() {
-    clearCanvas();
-    
-    if (currentLinePaths.length === 0) return;
-    
-    // Set line style
-    ctx.lineWidth = config.lineWidth;
-    
-    // Draw each stored path
-    for (let i = 0; i < currentLinePaths.length; i++) {
-        const path = currentLinePaths[i];
-        const color = currentLineColors[i];
-        
-        // Apply alpha to color
-        ctx.strokeStyle = hexToRgba(color, config.lineAlpha / 100);
-        ctx.beginPath();
-        
-        // Draw the path
-        ctx.moveTo(path[0].x, path[0].y);
-        for (let j = 1; j < path.length; j++) {
-            ctx.lineTo(path[j].x, path[j].y);
-        }
-        
-        ctx.stroke();
-    }
-}
-
-// Helper: Convert hex color to rgba string with alpha
-function hexToRgba(hex, alpha) {
-    let c = hex.replace('#', '');
-    if (c.length === 3) {
-        c = c[0]+c[0]+c[1]+c[1]+c[2]+c[2];
-    }
-    const num = parseInt(c, 16);
-    const r = (num >> 16) & 255;
-    const g = (num >> 8) & 255;
-    const b = num & 255;
-    return `rgba(${r},${g},${b},${alpha})`;
-}
-
-// Clear the canvas - NO PADDING
-function clearCanvas() {
-    ctx.clearRect(0, 0, config.canvasWidth, config.canvasHeight);
-    
-    // Clean white background
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, config.canvasWidth, config.canvasHeight);
-}
-
-// Export canvas as PNG - HIGH QUALITY EXPORT
-function exportToPNG() {
-    // Export directly from the high-resolution canvas
-    const link = document.createElement('a');
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-    link.download = `lines-${config.currentRatio}-${timestamp}.png`;
-    
-    // Use the high-resolution canvas directly for maximum quality
-    link.href = canvas.toDataURL('image/png');
-    
-    // Trigger download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Show feedback
-    showExportFeedback();
-}
-
-// Show export feedback
-function showExportFeedback() {
-    const originalText = exportBtn.textContent;
-    exportBtn.textContent = 'Exported!';
-    exportBtn.classList.add('export-success');
-    
-    setTimeout(() => {
-        exportBtn.textContent = originalText;
-        exportBtn.classList.remove('export-success');
-    }, 2000);
-}
-
-
-
-// Select distribution function
-function selectDistribution(event) {
-    // const distributionBtns = document.querySelectorAll('.distribution-btn'); // Already selected globally
-    // Remove active class from all buttons
-    distributionBtns.forEach(btn => btn.classList.remove('active'));
-    
-    // Add active class to clicked button
-    event.target.classList.add('active');
-    
-    // Update current distribution
-    config.currentDistribution = event.target.dataset.distribution;
-    
-    // Regenerate drawing with new distribution
-    generateDrawing();
-}
-
-// Select line mode
+// Patch selectMode to show distribution section for rectangle mode too
 function selectMode(event) {
-    // const modeBtns = document.querySelectorAll('.mode-btn'); // Already selected globally
     // Remove active class from all buttons
     modeBtns.forEach(btn => btn.classList.remove('active'));
     // Add active class to clicked button
@@ -736,7 +811,6 @@ function selectMode(event) {
     if (customAnglesCard) {
         if (config.currentMode === 'continuous') {
             customAnglesCard.style.display = 'flex';
-            // Automatically enable custom angles when continuous mode is selected
             config.useCustomAngles = true;
         } else {
             customAnglesCard.style.display = 'none';
@@ -758,8 +832,6 @@ function selectMode(event) {
     generateDrawing();
 }
 
-
-
 // Update custom angles from input fields
 function updateCustomAngles() {
     // Check if elements exist before accessing them
@@ -780,12 +852,6 @@ function updateCustomAngles() {
 
     
     generateDrawing();
-}
-
-// Get random palette for initial load
-function getRandomPalette() {
-    const randomPalette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-    return randomPalette.colors;
 }
 
 // Handle window resize (debounced for performance)
@@ -843,3 +909,195 @@ function removeTouchFeedback(event) {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', init); 
+
+// Restore generateLinePaths for line modes
+function generateLinePaths(lineCount) {
+    currentLinePaths = [];
+    currentLineColors = [];
+    // Calculate spacing between lines
+    const totalDrawingWidth = config.canvasWidth - config.lineWidth;
+    const spacing = totalDrawingWidth / (lineCount + 1);
+    // Drawing area parameters - NO PADDING
+    const startY = 0;
+    const endY = config.canvasHeight;
+    if (config.currentMode === 'continuous') {
+        // Continuous line mode - use custom angles or distribution-based angle
+        for (let i = 1; i <= lineCount; i++) {
+            const startX = spacing * i + (config.lineWidth / 2);
+            // Use consecutive colors instead of random
+            const colorIndex = (i - 1) % config.currentColors.length;
+            const lineColor = config.currentColors[colorIndex];
+            const linePath = [];
+            currentLineColors.push(lineColor);
+            // Calculate angle - either custom or from distribution
+            let angle;
+            if (config.useCustomAngles) {
+                // Use custom angles, cycling through the 3 angles
+                const angleIndex = (i - 1) % config.customAngles.length;
+                angle = config.customAngles[angleIndex] * (Math.PI / 180); // Convert degrees to radians
+            } else {
+                // Use distribution-based angle
+                angle = getFixedAngle();
+            }
+            // Calculate end point based on angle
+            const canvasHeight = config.canvasHeight;
+            const deltaX = Math.sin(angle) * canvasHeight;
+            const endX = startX + deltaX;
+            // Ensure end point stays within canvas bounds
+            const boundedEndX = Math.max(config.lineWidth/2, Math.min(config.canvasWidth - config.lineWidth/2, endX));
+            // Create straight line path
+            linePath.push({ x: startX, y: startY });
+            linePath.push({ x: boundedEndX, y: endY });
+            currentLinePaths.push(linePath);
+        }
+    } else {
+        // Segmented line mode - original behavior
+        const baseSegmentLength = 100;
+        for (let i = 1; i <= lineCount; i++) {
+            const startX = spacing * i + (config.lineWidth / 2);
+            const randomColor = getRandomColor();
+            const linePath = [];
+            currentLineColors.push(randomColor);
+            // Start position
+            let currentX = startX;
+            let currentY = startY;
+            linePath.push({ x: currentX, y: currentY });
+            // Generate segments until we reach the bottom
+            while (currentY < endY - 10) {
+                const remainingHeight = endY - currentY;
+                let randomAngle = getRandomAngle();
+                // Calculate segment length and ensure minimum vertical progress
+                let segmentLength = baseSegmentLength;
+                let deltaX = Math.sin(randomAngle) * segmentLength;
+                let deltaY = Math.cos(randomAngle) * segmentLength;
+                // Ensure we make at least some vertical progress
+                if (Math.abs(deltaY) < 20) {
+                    deltaY = Math.max(20, remainingHeight);
+                    segmentLength = deltaY / Math.cos(randomAngle);
+                    deltaX = Math.sin(randomAngle) * segmentLength;
+                }
+                // If this would overshoot the bottom, adjust to land exactly at bottom
+                if (currentY + deltaY > endY) {
+                    deltaY = endY - currentY;
+                    segmentLength = deltaY / Math.cos(randomAngle);
+                    deltaX = Math.sin(randomAngle) * segmentLength;
+                }
+                const nextX = currentX + deltaX;
+                const nextY = currentY + deltaY;
+                // Ensure we don't go outside canvas bounds horizontally
+                const boundedNextX = Math.max(config.lineWidth/2, Math.min(config.canvasWidth - config.lineWidth/2, nextX));
+                linePath.push({ x: boundedNextX, y: nextY });
+                // Update current position
+                currentX = boundedNextX;
+                currentY = nextY;
+            }
+            currentLinePaths.push(linePath);
+        }
+    }
+}
+
+function redrawCurrentPaths() {
+    clearCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.lineWidth = config.lineWidth;
+    ctx.globalAlpha = config.lineAlpha / 100;
+    currentLinePaths.forEach((path, index) => {
+        ctx.strokeStyle = currentLineColors[index];
+        ctx.beginPath();
+        ctx.moveTo(path[0].x, path[0].y);
+        for (let i = 1; i < path.length; i++) {
+            ctx.lineTo(path[i].x, path[i].y);
+        }
+        ctx.stroke();
+    });
+}
+
+function clearCanvas() {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function generateFilename() {
+    // Get figure type
+    const figureType = config.currentMode;
+    
+    // Get palette name
+    let paletteName = 'custom';
+    
+    // Check if current colors match any predefined palette
+    const currentColorsStr = JSON.stringify(config.currentColors.sort());
+    
+    // Check for special palettes first
+    if (JSON.stringify(['#000000', '#000000', '#000000']) === currentColorsStr) {
+        paletteName = 'black';
+    } else if (JSON.stringify(['#2c3e50', '#34495e', '#7f8c8d'].sort()) === currentColorsStr) {
+        paletteName = 'gray';
+    } else {
+        // Check against color palettes
+        for (const palette of colorPalettes) {
+            if (JSON.stringify(palette.colors.slice().sort()) === currentColorsStr) {
+                paletteName = palette.name.replace(/\s+/g, '-');
+                break;
+            }
+        }
+    }
+    
+    // Generate timestamp
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    const timestamp = `${year}${month}${day}-${hours}${minutes}${seconds}`;
+    
+    return `${figureType}-${paletteName}-${timestamp}.png`;
+}
+
+function exportToPNG() {
+    const link = document.createElement('a');
+    link.download = generateFilename();
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+function selectDistribution(event) {
+    // Remove active class from all distribution buttons
+    distributionBtns.forEach(btn => btn.classList.remove('active'));
+    // Add active class to clicked button
+    event.target.classList.add('active');
+    // Update current distribution
+    config.currentDistribution = event.target.dataset.distribution;
+    // Regenerate drawing with new distribution
+    generateDrawing();
+}
+
+function updateLineColors() {
+    // Update colors for existing lines based on current mode
+    if (config.currentMode === 'continuous') {
+        // Continuous mode uses consecutive colors
+        currentLineColors = [];
+        for (let i = 0; i < currentLinePaths.length; i++) {
+            const colorIndex = i % config.currentColors.length;
+            currentLineColors.push(config.currentColors[colorIndex]);
+        }
+    } else {
+        // Segmented mode uses random colors from the palette
+        currentLineColors = [];
+        for (let i = 0; i < currentLinePaths.length; i++) {
+            currentLineColors.push(getRandomColor());
+        }
+    }
+}
+
+function updateColors() {
+    if (config.currentMode === 'rectangle') {
+        redrawCurrentRectangles();
+    } else {
+        // Update line colors to use new palette, then redraw
+        updateLineColors();
+        redrawCurrentPaths();
+    }
+} 
