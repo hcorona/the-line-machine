@@ -333,9 +333,8 @@ body {
 }
 
 .hex-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 .button-row {
   display: flex;
@@ -457,7 +456,7 @@ button:focus {
   
   .app-main {
     display: grid;
-    grid-template-columns: 1fr 450px;
+    grid-template-columns: 1fr 520px;
     gap: 32px;
     align-items: start;
     max-width: 1400px;
@@ -500,7 +499,7 @@ button:focus {
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
-    width: 450px;
+    width: 520px;
   }
   
   .controls-column::-webkit-scrollbar {
@@ -771,4 +770,86 @@ a:hover, a:focus {
   height: 48px;
   width: 100%;
   visibility: hidden; 
+}
+
+/* Image Upload Section */
+.image-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.image-upload-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.image-upload-input:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+.image-upload-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+.clear-image-btn {
+  padding: 8px 16px;
+  background: var(--error);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.clear-image-btn:hover {
+  background: #b71c1c;
+}
+
+.layer-select {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.layer-select:hover {
+  border-color: var(--accent);
+}
+
+.layer-select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+.image-instructions {
+  background: var(--bg-secondary);
+  padding: 12px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--accent);
+}
+
+.image-instructions p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-style: italic;
 } 

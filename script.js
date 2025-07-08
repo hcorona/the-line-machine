@@ -121,7 +121,7 @@ const lineThicknessInput = document.getElementById('lineThicknessInput');
 const lineAlphaSlider = document.getElementById('lineAlpha');
 const lineAlphaValue = document.getElementById('lineAlphaValue');
 const lineAlphaInput = document.getElementById('lineAlphaInput');
-// const generateBtn = document.getElementById('generateBtn'); // Not used
+
 const exportBtn = document.getElementById('exportBtn');
 const colorBtns = document.querySelectorAll('.color-btn');
 const distributionBtns = document.querySelectorAll('.distribution-btn');
@@ -153,6 +153,7 @@ const config = {
     currentMode: 'segmented',
     useCustomAngles: false,
     customAngles: [0, 5, 2],
+    circleGradientAngles: [270, 270, 270], // Default angles for circle gradients (270° = top to bottom)
     aspectRatios: {
         '1:1': { width: 1080, height: 1080 },     // Instagram square
         '4:3': { width: 1080, height: 810 },      // Instagram landscape
@@ -168,6 +169,21 @@ let currentLineColors = [];
 
 // Store current rectangle data
 let currentRectangles = [];
+
+// Store current circle data
+let currentCircles = [];
+
+// Image layer functionality
+let uploadedImage = null;
+let imageElement = null; // Preloaded image element
+let imagePosition = { x: 0, y: 0 };
+let imageSize = { width: 200, height: 200 };
+let imageOriginalAspectRatio = 1; // Store original aspect ratio
+let imageLayerPosition = 1; // Default: between 1st and 2nd rectangle
+let imageOpacity = 1.0;
+let imageAngle = 0; // Rotation angle in degrees
+let isDraggingImage = false;
+let dragOffset = { x: 0, y: 0 };
 
 // Add these distribution functions:
 
@@ -309,8 +325,8 @@ function randomizeSettings() {
     const harmonyBtn = document.querySelector('.color-btn[data-type="harmony"]');
     if (harmonyBtn) harmonyBtn.classList.add('active');
     
-    // Random distribution (normal or exponential)
-    const distributions = ['normal', 'exponential'];
+    // Random distribution (normal, exponential, or concentric)
+    const distributions = ['normal', 'exponential', 'concentric'];
     const randomDistribution = distributions[Math.floor(Math.random() * distributions.length)];
     config.currentDistribution = randomDistribution;
     
@@ -339,39 +355,55 @@ function init() {
     lineThicknessSlider.addEventListener('input', throttle(updateLineThickness, 50));
     lineAlphaSlider.addEventListener('input', throttle(updateLineAlpha, 50));
     
-    // Add event listeners for text input fields
+    // Add event listeners for Enter key on text inputs
     lineCountInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             updateLineCountFromInput();
-            lineCountInput.blur();
         }
     });
     lineThicknessInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             updateLineThicknessFromInput();
-            lineThicknessInput.blur();
         }
     });
     lineAlphaInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             updateLineAlphaFromInput();
-            lineAlphaInput.blur();
         }
     });
     
-    // Add event listeners for color pickers
+    // Color picker event listeners
     primaryColorPicker.addEventListener('input', () => updateColorFromPicker('primary'));
-    secondaryColorPicker.addEventListener('input', () => updateColorFromPicker('secondary'));
-    tertiaryColorPicker.addEventListener('input', () => updateColorFromPicker('tertiary'));
-    
-    // Add event listeners for hex inputs
     primaryColorHex.addEventListener('input', () => updateColorFromHex('primary'));
+    secondaryColorPicker.addEventListener('input', () => updateColorFromPicker('secondary'));
     secondaryColorHex.addEventListener('input', () => updateColorFromHex('secondary'));
+    tertiaryColorPicker.addEventListener('input', () => updateColorFromPicker('tertiary'));
     tertiaryColorHex.addEventListener('input', () => updateColorFromHex('tertiary'));
+
+    // Image upload event listeners
+    const imageUpload = document.getElementById('imageUpload');
+    const clearImageBtn = document.getElementById('clearImageBtn');
+    const imageLayerSelect = document.getElementById('imageLayerPosition');
+    const imageSizeSlider = document.getElementById('imageSize');
+    const imageSizeValue = document.getElementById('imageSizeValue');
+    const imageAngleSlider = document.getElementById('imageAngle');
+    const imageAngleValue = document.getElementById('imageAngleValue');
+
+    imageUpload.addEventListener('change', handleImageUpload);
+    clearImageBtn.addEventListener('click', clearImage);
+    imageLayerSelect.addEventListener('change', updateImageLayerPosition);
+    imageSizeSlider.addEventListener('input', updateImageSize);
+    imageAngleSlider.addEventListener('input', updateImageAngle);
+
+    // Canvas interaction for image dragging
+    canvas.addEventListener('mousedown', handleCanvasMouseDown);
+    canvas.addEventListener('mousemove', handleCanvasMouseMove);
+    canvas.addEventListener('mouseup', handleCanvasMouseUp);
+    canvas.addEventListener('touchstart', handleCanvasTouchStart);
+    canvas.addEventListener('touchmove', handleCanvasTouchMove);
+    canvas.addEventListener('touchend', handleCanvasTouchEnd);
     
-    exportBtn.addEventListener('click', exportToPNG);
-    
-    // Add color palette event listeners
+    // Add event listeners for color pickers
     colorBtns.forEach(btn => {
         btn.addEventListener('click', selectColorPalette);
         // Add touch feedback for mobile
@@ -409,6 +441,15 @@ function init() {
     if (angle2) angle2.addEventListener('input', updateCustomAngles);
     if (angle3) angle3.addEventListener('input', updateCustomAngles);
     
+    // Add circle gradient angle event listeners - check if elements exist first
+    const circle1Angle = document.getElementById('circle1Angle');
+    const circle2Angle = document.getElementById('circle2Angle');
+    const circle3Angle = document.getElementById('circle3Angle');
+    
+    if (circle1Angle) circle1Angle.addEventListener('input', updateCircleGradientAngles);
+    if (circle2Angle) circle2Angle.addEventListener('input', updateCircleGradientAngles);
+    if (circle3Angle) circle3Angle.addEventListener('input', updateCircleGradientAngles);
+    
     // Add window resize listener for mobile orientation changes
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleOrientationChange);
@@ -432,6 +473,11 @@ function init() {
         randomizeSettings();
         generateDrawing();
     });
+
+    exportBtn.addEventListener('click', exportToPNG);
+
+    // Initialize the drawing
+    generateDrawing();
 }
 
 // Update canvas size based on aspect ratio
@@ -529,6 +575,8 @@ function selectAspectRatio(event) {
     updateCanvasSize();
     if (config.currentMode === 'rectangle') {
         redrawCurrentRectangles();
+    } else if (config.currentMode === 'circles') {
+        redrawCurrentCircles();
     } else {
         redrawCurrentPaths();
     }
@@ -561,6 +609,8 @@ function updateLineAlpha() {
     // Update transparency based on current mode
     if (config.currentMode === 'rectangle') {
         redrawCurrentRectangles();
+    } else if (config.currentMode === 'circles') {
+        redrawCurrentCircles();
     } else {
         redrawCurrentPaths();
     }
@@ -598,6 +648,8 @@ function updateLineAlphaFromInput() {
         // Update transparency based on current mode
         if (config.currentMode === 'rectangle') {
             redrawCurrentRectangles();
+        } else if (config.currentMode === 'circles') {
+            redrawCurrentCircles();
         } else {
             redrawCurrentPaths();
         }
@@ -754,14 +806,22 @@ function generateRectangles() {
     redrawCurrentRectangles();
 }
 
-// Redraw existing rectangles with current colors and alpha
+// Redraw existing rectangles with current colors and alpha, including image layer
 function redrawCurrentRectangles() {
     clearCanvas();
     const colors = config.currentColors;
     const alpha = config.lineAlpha / 100;
     
-    currentRectangles.forEach((rect, index) => {
-        const color = colors[index % colors.length];
+    // Draw rectangles and image in the correct order based on imageLayerPosition
+    for (let i = 0; i < currentRectangles.length; i++) {
+        // Draw image before this rectangle if imageLayerPosition matches
+        if (uploadedImage && imageLayerPosition === i) {
+            drawImageLayer();
+        }
+        
+        // Draw rectangle
+        const rect = currentRectangles[i];
+        const color = colors[i % colors.length];
         const {rw, rh, rx, ry, angle} = rect;
         
         ctx.save();
@@ -772,18 +832,141 @@ function redrawCurrentRectangles() {
         ctx.fillStyle = color;
         ctx.fillRect(-rw/2, -rh/2, rw, rh);
         ctx.restore();
+    }
+    
+    // Draw image on top if imageLayerPosition is after all rectangles
+    if (uploadedImage && imageLayerPosition >= currentRectangles.length) {
+        drawImageLayer();
+    }
+}
+
+// Draw the uploaded image at the current position and size
+function drawImageLayer() {
+    if (!imageElement) return;
+    
+    ctx.save();
+    ctx.globalAlpha = imageOpacity;
+    
+    // Apply rotation if needed
+    if (imageAngle !== 0) {
+        // Move to center of image, rotate, then draw
+        const centerX = imagePosition.x + imageSize.width / 2;
+        const centerY = imagePosition.y + imageSize.height / 2;
+        ctx.translate(centerX, centerY);
+        ctx.rotate(imageAngle * Math.PI / 180); // Convert degrees to radians
+        ctx.drawImage(imageElement, -imageSize.width / 2, -imageSize.height / 2, imageSize.width, imageSize.height);
+    } else {
+        // No rotation, draw normally
+        ctx.drawImage(imageElement, imagePosition.x, imagePosition.y, imageSize.width, imageSize.height);
+    }
+    
+    ctx.restore();
+}
+
+
+
+// Generate new circles with random sizes and positions
+function generateCircles() {
+    currentCircles = [];
+    const w = config.canvasWidth;
+    const h = config.canvasHeight;
+    
+    function getRandomCircle() {
+        // Use normal, exponential, or concentric distribution for size and position
+        let radius, cx, cy;
+        if (config.currentDistribution === 'normal') {
+            // Generate radius between 60-300px for better visibility
+            radius = Math.max(60, Math.min(300, Math.abs(normalRandom(150, 50))));
+            // Center position with some variation
+            cx = Math.max(radius, Math.min(w - radius, normalRandom(w * 0.5, w * 0.15)));
+            cy = Math.max(radius, Math.min(h - radius, normalRandom(h * 0.5, h * 0.15)));
+        } else if (config.currentDistribution === 'exponential') {
+            // Exponential distribution for more varied sizes
+            radius = Math.max(60, Math.min(300, exponentialRandom(0.8) * 200 + 60));
+            cx = Math.max(radius, Math.min(w - radius, Math.random() * (w - 2 * radius) + radius));
+            cy = Math.max(radius, Math.min(h - radius, Math.random() * (h - 2 * radius) + radius));
+        } else if (config.currentDistribution === 'concentric') {
+            // Concentric circles - same center, different sizes
+            cx = w * 0.5; // Center horizontally
+            cy = h * 0.5; // Center vertically
+            // Generate different radius for each circle (will be overridden below)
+            radius = 100; // Placeholder, will be set based on circle index
+        }
+        return {radius, cx, cy};
+    }
+    
+    // Generate 3 circles
+    for (let i = 0; i < 3; i++) {
+        const circle = getRandomCircle();
+        
+        // For concentric distribution, override radius based on circle index
+        if (config.currentDistribution === 'concentric') {
+            // Create concentric circles with same radius: all the same size
+            const radius = Math.min(w, h) * 0.3; // Same radius for all circles
+            circle.radius = Math.max(100, radius); // Ensure good visibility
+        }
+        
+        currentCircles.push(circle);
+    }
+    
+    // Draw them for the first time
+    redrawCurrentCircles();
+}
+
+// Redraw existing circles with current colors and alpha
+function redrawCurrentCircles() {
+    clearCanvas();
+    const colors = config.currentColors;
+    const alpha = config.lineAlpha / 100;
+    
+    // Ensure we have the proper context setup
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    
+    currentCircles.forEach((circle, index) => {
+        const color = colors[index % colors.length];
+        const {radius, cx, cy} = circle;
+        
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        
+        // Create linear gradient with angle control
+        let gradientAngle = 270; // Default: top to bottom (270 degrees)
+        
+        // Use custom gradient angle for all circle modes
+        if (config.circleGradientAngles) {
+            gradientAngle = config.circleGradientAngles[index] || 270;
+        }
+        
+        // Convert angle to radians and calculate gradient endpoints
+        const angleRad = (gradientAngle * Math.PI) / 180;
+        const startX = cx - Math.cos(angleRad) * radius;
+        const startY = cy - Math.sin(angleRad) * radius;
+        const endX = cx + Math.cos(angleRad) * radius;
+        const endY = cy + Math.sin(angleRad) * radius;
+        
+        const gradient = ctx.createLinearGradient(startX, startY, endX, endY);
+        gradient.addColorStop(0, color + '1A'); // 10% opacity at start
+        gradient.addColorStop(1, color + 'FF'); // 100% opacity at end
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.restore();
     });
 }
 
-// Legacy function for backward compatibility - now just calls generateRectangles
-function drawRectangles() {
-    generateRectangles();
-}
 
-// Patch generateDrawing to support rectangle mode
+
+// Generate drawing based on current mode
 function generateDrawing() {
     if (config.currentMode === 'rectangle') {
-        drawRectangles();
+        generateRectangles();
+        return;
+    }
+    if (config.currentMode === 'circles') {
+        generateCircles();
         return;
     }
     const lineCount = parseInt(lineCountSlider.value);
@@ -827,6 +1010,26 @@ function selectMode(event) {
             distributionSection.style.display = 'block';
         }
     }
+
+    // Show/hide image layer section for rectangle mode
+    const imageLayerSection = document.getElementById('imageLayerSection');
+    if (imageLayerSection) {
+        if (config.currentMode === 'rectangle') {
+            imageLayerSection.style.display = 'block';
+        } else {
+            imageLayerSection.style.display = 'none';
+        }
+    }
+
+    // Show/hide circle angles section for all circle modes
+    const circleAnglesSection = document.getElementById('circleAnglesSection');
+    if (circleAnglesSection) {
+        if (config.currentMode === 'circles') {
+            circleAnglesSection.style.display = 'block';
+        } else {
+            circleAnglesSection.style.display = 'none';
+        }
+    }
     
     // Regenerate drawing with new mode
     generateDrawing();
@@ -852,6 +1055,37 @@ function updateCustomAngles() {
 
     
     generateDrawing();
+}
+
+// Update circle gradient angles from input fields
+function updateCircleGradientAngles() {
+    // Check if elements exist before accessing them
+    const circle1Angle = document.getElementById('circle1Angle');
+    const circle2Angle = document.getElementById('circle2Angle');
+    const circle3Angle = document.getElementById('circle3Angle');
+    
+    const circle1AngleValue = document.getElementById('circle1AngleValue');
+    const circle2AngleValue = document.getElementById('circle2AngleValue');
+    const circle3AngleValue = document.getElementById('circle3AngleValue');
+    
+    if (!circle1Angle || !circle2Angle || !circle3Angle) {
+        return;
+    }
+    
+    // Update the config with new angles
+    config.circleGradientAngles[0] = parseFloat(circle1Angle.value);
+    config.circleGradientAngles[1] = parseFloat(circle2Angle.value);
+    config.circleGradientAngles[2] = parseFloat(circle3Angle.value);
+    
+    // Update the display values
+    if (circle1AngleValue) circle1AngleValue.textContent = circle1Angle.value + '°';
+    if (circle2AngleValue) circle2AngleValue.textContent = circle2Angle.value + '°';
+    if (circle3AngleValue) circle3AngleValue.textContent = circle3Angle.value + '°';
+    
+    // Redraw circles with new angles
+    if (config.currentMode === 'circles') {
+        redrawCurrentCircles();
+    }
 }
 
 // Handle window resize (debounced for performance)
@@ -998,7 +1232,6 @@ function generateLinePaths(lineCount) {
 
 function redrawCurrentPaths() {
     clearCanvas();
-    const ctx = canvas.getContext('2d');
     ctx.lineWidth = config.lineWidth;
     ctx.globalAlpha = config.lineAlpha / 100;
     currentLinePaths.forEach((path, index) => {
@@ -1013,7 +1246,6 @@ function redrawCurrentPaths() {
 }
 
 function clearCanvas() {
-    const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -1070,6 +1302,17 @@ function selectDistribution(event) {
     event.target.classList.add('active');
     // Update current distribution
     config.currentDistribution = event.target.dataset.distribution;
+    
+    // Show/hide circle angles section for all circle modes
+    const circleAnglesSection = document.getElementById('circleAnglesSection');
+    if (circleAnglesSection) {
+        if (config.currentMode === 'circles') {
+            circleAnglesSection.style.display = 'block';
+        } else {
+            circleAnglesSection.style.display = 'none';
+        }
+    }
+    
     // Regenerate drawing with new distribution
     generateDrawing();
 }
@@ -1095,9 +1338,203 @@ function updateLineColors() {
 function updateColors() {
     if (config.currentMode === 'rectangle') {
         redrawCurrentRectangles();
+    } else if (config.currentMode === 'circles') {
+        redrawCurrentCircles();
     } else {
         // Update line colors to use new palette, then redraw
         updateLineColors();
         redrawCurrentPaths();
+    }
+}
+
+// Image upload event handlers
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImage = e.target.result;
+            
+            // Preload the image element
+            imageElement = new Image();
+            imageElement.onload = function() {
+                // Store original aspect ratio
+                imageOriginalAspectRatio = imageElement.width / imageElement.height;
+                
+                // Calculate appropriate size maintaining aspect ratio
+                const maxSize = 200;
+                
+                if (imageOriginalAspectRatio > 1) {
+                    // Landscape
+                    imageSize.width = maxSize;
+                    imageSize.height = maxSize / imageOriginalAspectRatio;
+                } else {
+                    // Portrait or square
+                    imageSize.height = maxSize;
+                    imageSize.width = maxSize * imageOriginalAspectRatio;
+                }
+                
+                // Center the image on the canvas
+                imagePosition = { 
+                    x: (config.canvasWidth - imageSize.width) / 2, 
+                    y: (config.canvasHeight - imageSize.height) / 2 
+                };
+                
+                imageLayerPosition = 1; // Default: between 1st and 2nd rectangle
+                imageOpacity = 1.0;
+                imageAngle = 0; // Reset rotation
+                isDraggingImage = false;
+                dragOffset = { x: 0, y: 0 };
+                
+                // Reset sliders to default values
+                document.getElementById('imageSize').value = 200;
+                document.getElementById('imageSizeValue').textContent = '200px';
+                document.getElementById('imageAngle').value = 0;
+                document.getElementById('imageAngleValue').textContent = '0°';
+                
+                // Show image controls
+                document.getElementById('clearImageBtn').style.display = 'inline-block';
+                document.getElementById('layerPositionRow').style.display = 'flex';
+                document.getElementById('imageSizeRow').style.display = 'flex';
+                document.getElementById('imageAngleRow').style.display = 'flex';
+                document.getElementById('imageInstructions').style.display = 'block';
+                
+                generateDrawing();
+            };
+            imageElement.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function clearImage() {
+    uploadedImage = null;
+    imageElement = null;
+    
+    // Hide image controls
+    document.getElementById('clearImageBtn').style.display = 'none';
+    document.getElementById('layerPositionRow').style.display = 'none';
+    document.getElementById('imageSizeRow').style.display = 'none';
+    document.getElementById('imageAngleRow').style.display = 'none';
+    document.getElementById('imageInstructions').style.display = 'none';
+    
+    // Reset file input
+    document.getElementById('imageUpload').value = '';
+    
+    generateDrawing();
+}
+
+function updateImageLayerPosition(event) {
+    imageLayerPosition = parseInt(event.target.value);
+    redrawCurrentRectangles(); // Just redraw, don't regenerate
+}
+
+function updateImageSize(event) {
+    const size = parseInt(event.target.value);
+    document.getElementById('imageSizeValue').textContent = size + 'px';
+    
+    // Maintain aspect ratio when resizing
+    if (imageOriginalAspectRatio > 1) {
+        // Landscape
+        imageSize.width = size;
+        imageSize.height = size / imageOriginalAspectRatio;
+    } else {
+        // Portrait or square
+        imageSize.height = size;
+        imageSize.width = size * imageOriginalAspectRatio;
+    }
+    
+    // Keep image within canvas bounds
+    imagePosition.x = Math.max(0, Math.min(config.canvasWidth - imageSize.width, imagePosition.x));
+    imagePosition.y = Math.max(0, Math.min(config.canvasHeight - imageSize.height, imagePosition.y));
+    
+    redrawCurrentRectangles(); // Just redraw, don't regenerate
+}
+
+function updateImageAngle(event) {
+    imageAngle = parseInt(event.target.value);
+    document.getElementById('imageAngleValue').textContent = imageAngle + '°';
+    redrawCurrentRectangles(); // Just redraw, don't regenerate
+}
+
+
+
+// Canvas interaction for image dragging
+function getCanvasCoordinates(event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = config.canvasWidth / rect.width;
+    const scaleY = config.canvasHeight / rect.height;
+    
+    return {
+        x: (event.clientX - rect.left) * scaleX,
+        y: (event.clientY - rect.top) * scaleY
+    };
+}
+
+function isPointInImage(x, y) {
+    return uploadedImage && 
+           x >= imagePosition.x && 
+           x <= imagePosition.x + imageSize.width &&
+           y >= imagePosition.y && 
+           y <= imagePosition.y + imageSize.height;
+}
+
+function handleCanvasMouseDown(event) {
+    if (event.button === 0 && uploadedImage && config.currentMode === 'rectangle') {
+        const coords = getCanvasCoordinates(event);
+        if (isPointInImage(coords.x, coords.y)) {
+            isDraggingImage = true;
+            dragOffset.x = coords.x - imagePosition.x;
+            dragOffset.y = coords.y - imagePosition.y;
+            event.preventDefault();
+        }
+    }
+}
+
+function handleCanvasMouseMove(event) {
+    if (isDraggingImage && uploadedImage) {
+        const coords = getCanvasCoordinates(event);
+        imagePosition.x = Math.max(0, Math.min(config.canvasWidth - imageSize.width, coords.x - dragOffset.x));
+        imagePosition.y = Math.max(0, Math.min(config.canvasHeight - imageSize.height, coords.y - dragOffset.y));
+        redrawCurrentRectangles(); // Just redraw, don't regenerate
+        event.preventDefault();
+    }
+}
+
+function handleCanvasMouseUp(event) {
+    if (isDraggingImage) {
+        isDraggingImage = false;
+        event.preventDefault();
+    }
+}
+
+function handleCanvasTouchStart(event) {
+    if (event.touches.length === 1 && uploadedImage && config.currentMode === 'rectangle') {
+        const touch = event.touches[0];
+        const coords = getCanvasCoordinates(touch);
+        if (isPointInImage(coords.x, coords.y)) {
+            isDraggingImage = true;
+            dragOffset.x = coords.x - imagePosition.x;
+            dragOffset.y = coords.y - imagePosition.y;
+            event.preventDefault();
+        }
+    }
+}
+
+function handleCanvasTouchMove(event) {
+    if (isDraggingImage && uploadedImage && event.touches.length === 1) {
+        const touch = event.touches[0];
+        const coords = getCanvasCoordinates(touch);
+        imagePosition.x = Math.max(0, Math.min(config.canvasWidth - imageSize.width, coords.x - dragOffset.x));
+        imagePosition.y = Math.max(0, Math.min(config.canvasHeight - imageSize.height, coords.y - dragOffset.y));
+        redrawCurrentRectangles(); // Just redraw, don't regenerate
+        event.preventDefault();
+    }
+}
+
+function handleCanvasTouchEnd(event) {
+    if (isDraggingImage) {
+        isDraggingImage = false;
+        event.preventDefault();
     }
 } 
