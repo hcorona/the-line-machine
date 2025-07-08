@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="script.js?v=3" defer></script>
 </head>
 <body>
     <header class="app-header" role="banner">
@@ -74,11 +75,46 @@
                     </section>
                     
                     <section class="sheet-section">
-                        <h2 class="sheet-title">Line Mode</h2>
+                        <h2 class="sheet-title">Drawing Type</h2>
                         <div class="button-row">
                             <button class="mode-btn active" data-mode="segmented">Segmented</button>
                             <button class="mode-btn" data-mode="continuous">Continuous</button>
                             <button class="mode-btn" data-mode="rectangle">Rectangle</button>
+                            <button class="mode-btn" data-mode="circles">Circles</button>
+                        </div>
+                    </section>
+                    
+                    <!-- Image Layer Section (Rectangle Mode Only) -->
+                    <section class="sheet-section" id="imageLayerSection" style="display: none;">
+                        <h2 class="sheet-title">Image Layer</h2>
+                        <div class="image-upload-section">
+                            <div class="control-row">
+                                <label for="imageUpload">Upload Image</label>
+                                <input type="file" id="imageUpload" accept="image/*" class="image-upload-input">
+                                <button id="clearImageBtn" class="clear-image-btn" style="display: none;">Clear</button>
+                            </div>
+                            <div class="control-row" id="layerPositionRow" style="display: none;">
+                                <label for="imageLayerPosition">Layer Position</label>
+                                <select id="imageLayerPosition" class="layer-select">
+                                    <option value="0">Behind all rectangles</option>
+                                    <option value="1" selected>Between 1st and 2nd rectangle</option>
+                                    <option value="2">Between 2nd and 3rd rectangle</option>
+                                    <option value="3">In front of all rectangles</option>
+                                </select>
+                            </div>
+                            <div class="control-row" id="imageSizeRow" style="display: none;">
+                                <label for="imageSize">Image Size</label>
+                                <input type="range" id="imageSize" min="50" max="500" value="200">
+                                <span id="imageSizeValue">200px</span>
+                            </div>
+                            <div class="control-row" id="imageAngleRow" style="display: none;">
+                                <label for="imageAngle">Rotation</label>
+                                <input type="range" id="imageAngle" min="-180" max="180" value="0">
+                                <span id="imageAngleValue">0°</span>
+                            </div>
+                            <div class="image-instructions" id="imageInstructions" style="display: none;">
+                                <p>💡 Drag the image on the canvas to reposition it</p>
+                            </div>
                         </div>
                     </section>
                     
@@ -113,6 +149,27 @@
                         <div class="button-row">
                             <button class="distribution-btn active" data-distribution="normal">Normal</button>
                             <button class="distribution-btn" data-distribution="exponential">Exponential</button>
+                            <button class="distribution-btn" data-distribution="concentric">Concentric</button>
+                        </div>
+                    </section>
+                    
+                    <!-- Circle Gradient Angles Section (Concentric Mode Only) -->
+                    <section class="sheet-section" id="circleAnglesSection" style="display: none;">
+                        <h2 class="sheet-title">Circle Gradient Angles</h2>
+                        <div class="control-row">
+                            <label for="circle1Angle">Circle 1</label>
+                            <input type="range" id="circle1Angle" min="0" max="360" value="270">
+                            <span id="circle1AngleValue">270°</span>
+                        </div>
+                        <div class="control-row">
+                            <label for="circle2Angle">Circle 2</label>
+                            <input type="range" id="circle2Angle" min="0" max="360" value="270">
+                            <span id="circle2AngleValue">270°</span>
+                        </div>
+                        <div class="control-row">
+                            <label for="circle3Angle">Circle 3</label>
+                            <input type="range" id="circle3Angle" min="0" max="360" value="270">
+                            <span id="circle3AngleValue">270°</span>
                         </div>
                     </section>
                     
@@ -151,7 +208,5 @@
     </main>
 
     <footer class="empty-footer empty-footer-style"></footer>
-
-    <script src="script.js"></script>
 </body>
 </html> 
